@@ -2,10 +2,15 @@ package com.poisonedyouth
 
 import io.ktor.http.HttpStatusCode
 
-class CustomerController {
-    private val customerApplicationService: CustomerApplicationService = CustomerApplicationService()
+interface CustomerApi {
+    fun addNewCustomer(customerDto: CustomerDto): Pair<HttpStatusCode, CustomerController.ResponseDto>
+}
 
-    fun addNewCustomer(customerDto: CustomerDto): Pair<HttpStatusCode, ResponseDto> {
+class CustomerController(
+    private val customerApplicationService: CustomerApplicationService
+) : CustomerApi {
+
+    override fun addNewCustomer(customerDto: CustomerDto): Pair<HttpStatusCode, ResponseDto> {
         return customerApplicationService.addNewCustomer(customerDto).let { result ->
             when (result) {
                 is Success -> handleSuccess(result)

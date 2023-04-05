@@ -4,9 +4,15 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
 import kotlin.random.Random
 
-class CustomerRepository {
+interface CustomerRepository{
+    fun createCustomer(customer: Customer): Long
+    fun existsCustomerByEmail(email: String): Boolean
+    fun getCustomerById(id: Long): Customer?
+}
 
-    fun createNewCustomer(customer: Customer) = transaction {
+class CustomerRepositoryImpl: CustomerRepository {
+
+    override fun createCustomer(customer: Customer) = transaction {
         val addressEntityNew = if (customer.address.id == null) {
             AddressEntity.new{
                 street = customer.address.street
@@ -37,9 +43,9 @@ class CustomerRepository {
         customerEntityNew.customerId
     }
 
-    fun existsCustomerByEmail(email: String) = CustomerEntity.existsCustomerByEmail(email)
+    override fun existsCustomerByEmail(email: String) = CustomerEntity.existsCustomerByEmail(email)
 
-    fun getCustomerById(id: Long) = transaction {
+    override fun getCustomerById(id: Long) = transaction {
         CustomerEntity.findById(id)?.let { customerEntity ->
             Customer(
                 id = customerEntity.id.value,

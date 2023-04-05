@@ -4,10 +4,10 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
-class CustomerApplicationService {
-    private val customerRepository: CustomerRepository = CustomerRepository()
-    private val addressRepository: AddressRepository = AddressRepository()
-
+class CustomerApplicationService(
+    private val addressRepository: AddressRepository,
+    private val customerRepository: CustomerRepository
+) {
     fun addNewCustomer(customerDto: CustomerDto): ApiResult<Long> {
         try {
             val customer = mapCustomerDtoToCustomer(customerDto)
@@ -23,7 +23,7 @@ class CustomerApplicationService {
                 customer.copy(address = address)
             }
 
-            return Success(customerRepository.createNewCustomer(customerToPersist))
+            return Success(customerRepository.createCustomer(customerToPersist))
 
         } catch (e: DateTimeParseException) {
             return Failure(

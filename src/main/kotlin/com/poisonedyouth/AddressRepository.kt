@@ -3,8 +3,16 @@ package com.poisonedyouth
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.Locale
 
-class AddressRepository {
-    fun createNewAddress(address: Address) =
+interface AddressRepository {
+    fun createAddress(address: Address): Long
+    fun getAddressById(id: Long): Address?
+    fun findAddressByZipCode(zipCode: Int): Address?
+    fun findAll(): List<Address>
+}
+
+class AddressRepositoryImpl : AddressRepository {
+
+    override fun createAddress(address: Address) =
         AddressEntity.new(address.id) {
             street = address.street
             number = address.number
@@ -13,7 +21,7 @@ class AddressRepository {
             country = address.country
         }.id.value
 
-    fun getAddressById(id: Long) = AddressEntity.findById(id)?.let {
+    override fun getAddressById(id: Long) = AddressEntity.findById(id)?.let {
         Address(
             id = it.id.value,
             street = it.street,
@@ -24,7 +32,7 @@ class AddressRepository {
         )
     }
 
-    fun findAddressByZipCode(zipCode: Int) = AddressEntity.findAddressesByZipCode(zipCode)?.let {
+    override fun findAddressByZipCode(zipCode: Int) = AddressEntity.findAddressesByZipCode(zipCode)?.let {
         Address(
             id = it.id.value,
             street = it.street,
@@ -35,7 +43,7 @@ class AddressRepository {
         )
     }
 
-    fun findAll() = transaction {
+    override fun findAll() = transaction {
         AddressEntity.all().map {
             Address(
                 id = it.id.value,
