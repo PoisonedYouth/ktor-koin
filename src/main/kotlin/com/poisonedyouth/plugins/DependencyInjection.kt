@@ -15,9 +15,9 @@ import org.koin.logger.slf4jLogger
 
 val main = module {
     // Place for component definition
+    single<CustomerApplicationService> { CustomerApplicationService(get(), get()) }
     single<AddressRepository> { AddressRepositoryImpl() }
     single<CustomerRepository> { CustomerRepositoryImpl() }
-    single<CustomerApplicationService> { CustomerApplicationService(get(), get()) }
     single<CustomerApi> { CustomerController(get()) }
 }
 

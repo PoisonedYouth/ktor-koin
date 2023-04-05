@@ -3,12 +3,24 @@ package com.poisonedyouth
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.extension.RegisterExtension
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import org.koin.test.junit5.KoinTestExtension
 import java.time.LocalDate
 
 @ExtendWith(CleanDatabaseExtension::class)
-class CustomerRepositoryTest {
+class CustomerRepositoryTest: KoinTest {
 
-    private val customerRepository = CustomerRepository()
+    private val customerRepository by inject<CustomerRepository>()
+
+    @JvmField
+    @RegisterExtension
+    val koinTestExtension = KoinTestExtension.create {
+        modules(
+            com.poisonedyouth.plugins.main
+        )
+    }
 
 
     @Test
@@ -39,7 +51,7 @@ class CustomerRepositoryTest {
         )
 
         // when
-        customerRepository.createNewCustomer(customer)
+        customerRepository.createCustomer(customer)
 
         // then
         assertThat(customerRepository.getCustomerById(1L)).isNotNull

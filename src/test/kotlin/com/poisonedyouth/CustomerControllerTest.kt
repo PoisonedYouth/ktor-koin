@@ -4,11 +4,23 @@ import io.ktor.http.HttpStatusCode
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.extension.RegisterExtension
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import org.koin.test.junit5.KoinTestExtension
 
 @ExtendWith(CleanDatabaseExtension::class)
-internal class CustomerControllerTest {
+internal class CustomerControllerTest : KoinTest {
 
-    private val customerController = CustomerController()
+    private val customerController by inject<CustomerApi>()
+
+    @JvmField
+    @RegisterExtension
+    val koinTestExtension = KoinTestExtension.create {
+        modules(
+            com.poisonedyouth.plugins.main
+        )
+    }
 
     @Test
     fun `returns SuccessDto with correct http status`() {

@@ -2,6 +2,7 @@ package com.poisonedyouth
 
 import com.poisonedyouth.plugins.configureRouting
 import com.poisonedyouth.plugins.configureSerialization
+import com.poisonedyouth.plugins.installKoin
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
@@ -25,6 +26,7 @@ class CustomerEntityAcceptanceTest {
             config = ApplicationConfig("application-test.conf")
         }
         application {
+            installKoin()
             configureSerialization()
             configureRouting()
         }

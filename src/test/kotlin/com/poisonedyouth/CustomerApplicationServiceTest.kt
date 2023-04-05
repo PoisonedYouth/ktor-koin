@@ -3,15 +3,26 @@ package com.poisonedyouth
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.extension.RegisterExtension
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import org.koin.test.junit5.KoinTestExtension
 import java.time.LocalDate
 
 @ExtendWith(CleanDatabaseExtension::class)
-class CustomerApplicationServiceTest {
+class CustomerApplicationServiceTest : KoinTest {
 
-    private val addressRepository = AddressRepository()
-    private val customerRepository = CustomerRepository()
+    private val addressRepository by inject<AddressRepository>()
+    private val customerRepository by inject<CustomerRepository>()
+    private val customerApplicationService by inject<CustomerApplicationService>()
 
-    private val customerApplicationService = CustomerApplicationService()
+    @JvmField
+    @RegisterExtension
+    val koinTestExtension = KoinTestExtension.create {
+        modules(
+            com.poisonedyouth.plugins.main
+        )
+    }
 
     @Test
     fun `addNewCustomer returns failure result for duplicate email`() {
@@ -105,7 +116,7 @@ class CustomerApplicationServiceTest {
             city = "Los Angeles",
             country = "US"
         )
-        addressRepository.createNewAddress(address)
+        addressRepository.createAddress(address)
         val addressDto = AddressDto(
             street = address.street,
             number = address.number,
@@ -207,7 +218,7 @@ class CustomerApplicationServiceTest {
                 )
             )
         )
-        customerRepository.createNewCustomer(customer)
+        customerRepository.createCustomer(customer)
         return customer
     }
 }
