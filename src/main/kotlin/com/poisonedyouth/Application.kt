@@ -1,9 +1,11 @@
 package com.poisonedyouth
 
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import com.poisonedyouth.plugins.*
+import com.poisonedyouth.plugins.configureRouting
+import com.poisonedyouth.plugins.configureSerialization
+import com.poisonedyouth.plugins.installKoin
+import io.ktor.server.application.Application
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
@@ -11,6 +13,7 @@ fun main() {
 }
 
 fun Application.module() {
+    installKoin()
     configureSerialization()
     configureRouting()
 }
