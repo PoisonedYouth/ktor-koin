@@ -9,16 +9,18 @@ import com.poisonedyouth.CustomerRepository
 import com.poisonedyouth.CustomerRepositoryImpl
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
 val main = module {
     // Place for component definition
-    single<CustomerApplicationService> { CustomerApplicationService(get(), get()) }
-    single<AddressRepository> { AddressRepositoryImpl() }
-    single<CustomerRepository> { CustomerRepositoryImpl() }
-    single<CustomerApi> { CustomerController(get()) }
+    singleOf(::AddressRepositoryImpl) bind AddressRepository::class
+    singleOf(::CustomerRepositoryImpl) bind CustomerRepository::class
+    singleOf(::CustomerApplicationService)
+    singleOf(::CustomerController) bind CustomerApi::class
 }
 
 fun Application.installKoin() {
