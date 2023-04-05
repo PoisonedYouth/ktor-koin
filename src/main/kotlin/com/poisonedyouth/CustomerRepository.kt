@@ -1,6 +1,5 @@
 package com.poisonedyouth
 
-import com.poisonedyouth.plugins.AccountEntity
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
 import kotlin.random.Random

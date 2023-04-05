@@ -1,7 +1,5 @@
-package com.poisonedyouth.plugins
+package com.poisonedyouth
 
-import com.poisonedyouth.CustomerEntity
-import com.poisonedyouth.CustomerTable
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

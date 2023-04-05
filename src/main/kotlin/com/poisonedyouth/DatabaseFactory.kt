@@ -1,6 +1,5 @@
 package com.poisonedyouth
 
-import com.poisonedyouth.plugins.AccountTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database

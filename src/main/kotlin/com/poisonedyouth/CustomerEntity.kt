@@ -1,7 +1,5 @@
 package com.poisonedyouth
 
-import com.poisonedyouth.plugins.AccountEntity
-import com.poisonedyouth.plugins.AccountTable
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

@@ -1,7 +1,5 @@
 package com.poisonedyouth
 
-import com.poisonedyouth.plugins.AccountEntity
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.exceptions.ExposedSQLException

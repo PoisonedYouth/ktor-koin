@@ -32,7 +32,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:0.38.2")
     implementation("org.jetbrains.exposed:exposed-dao:0.38.2")
     implementation("org.jetbrains.exposed:exposed-java-time:0.38.2")
-    implementation("io.insert-koin:koin-core:$koinVersion")
+    //implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-ktor:$koinVersion")
 
     runtimeOnly("mysql:mysql-connector-java:8.0.29")
