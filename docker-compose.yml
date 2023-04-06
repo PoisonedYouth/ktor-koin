@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  mysql:
+    container_name: mysql-koin
+    image: mysql:5.7
+    hostname: mysql.docker
+    command: --innodb_use_native_aio=0
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - TZ=Europe/Berlin
+    ports:
+      - "3306:3306"
