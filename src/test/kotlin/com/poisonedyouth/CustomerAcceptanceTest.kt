@@ -40,4 +40,30 @@ class CustomerEntityAcceptanceTest {
         }
     }
 
+    @Test
+    fun `access counter`() = testApplication {
+        // given
+        environment {
+            config = ApplicationConfig("application-test.conf")
+        }
+        application {
+            installKoin()
+            configureSerialization()
+            configureRouting()
+        }
+        // when
+        client.post("/api/v1/customer"){
+            setBody(File("src/test/resources/payload.json").readText())
+            contentType(ContentType.Application.Json)
+        }.apply {
+            assertThat(status).isEqualTo(HttpStatusCode.Created)
+            assertThat(bodyAsText()).containsPattern("\"customerId\" : \\d{5}")
+        }
+
+        client.post("/api/v1/customer"){
+            setBody(File("src/test/resources/payload.json").readText())
+            contentType(ContentType.Application.Json)
+        }
+    }
+
 }

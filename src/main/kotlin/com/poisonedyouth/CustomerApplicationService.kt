@@ -1,5 +1,9 @@
 package com.poisonedyouth
 
+import com.poisonedyouth.plugins.configureRouting
+import org.koin.java.KoinJavaComponent.inject
+import org.koin.ktor.ext.inject
+import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -8,7 +12,12 @@ class CustomerApplicationService(
     private val addressRepository: AddressRepository,
     private val customerRepository: CustomerRepository
 ) {
+    val accessCounter by inject<AccessCounter>(AccessCounter::class.java)
+    val logger = LoggerFactory.getLogger(this::class.java)
+
     fun addNewCustomer(customerDto: CustomerDto): ApiResult<Long> {
+        logger.info("Current in CustomerApplicationService counter: ${accessCounter.getCurrentCount()}")
+        accessCounter.increaseCounter()
         try {
             val customer = mapCustomerDtoToCustomer(customerDto)
 

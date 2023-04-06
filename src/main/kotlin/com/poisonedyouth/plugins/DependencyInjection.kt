@@ -1,5 +1,6 @@
 package com.poisonedyouth.plugins
 
+import com.poisonedyouth.AccessCounter
 import com.poisonedyouth.AddressRepository
 import com.poisonedyouth.AddressRepositoryImpl
 import com.poisonedyouth.CustomerApi
@@ -9,6 +10,7 @@ import com.poisonedyouth.CustomerRepository
 import com.poisonedyouth.CustomerRepositoryImpl
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -21,6 +23,8 @@ val main = module {
     singleOf(::CustomerRepositoryImpl) bind CustomerRepository::class
     singleOf(::CustomerApplicationService)
     singleOf(::CustomerController) bind CustomerApi::class
+
+    factoryOf(::AccessCounter)
 }
 
 fun Application.installKoin() {
