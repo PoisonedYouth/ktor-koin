@@ -1,6 +1,7 @@
 package com.poisonedyouth
 
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.core.annotation.Single
 import java.util.Locale
 
 interface AddressRepository {
@@ -10,6 +11,7 @@ interface AddressRepository {
     fun findAll(): List<Address>
 }
 
+@Single
 class AddressRepositoryImpl : AddressRepository {
 
     override fun createAddress(address: Address) =

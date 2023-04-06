@@ -10,13 +10,13 @@ import com.poisonedyouth.CustomerRepository
 import com.poisonedyouth.CustomerRepositoryImpl
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
-import org.koin.core.component.getScopeName
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.scopedOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import org.koin.ksp.generated.defaultModule
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
@@ -30,7 +30,7 @@ val main = module {
 
     factoryOf(::AccessCounter)
 
-    scope(named("Custom")){
+    scope(named("Custom")) {
         scopedOf(::AccessCounter)
     }
 }
@@ -38,6 +38,7 @@ val main = module {
 fun Application.installKoin() {
     install(Koin) {
         slf4jLogger()
-        modules(main)
+        //modules(main)
+        defaultModule()
     }
 }

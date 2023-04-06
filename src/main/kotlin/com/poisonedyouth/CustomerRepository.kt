@@ -1,6 +1,8 @@
 package com.poisonedyouth
 
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.core.annotation.Single
+import org.koin.core.annotation.Singleton
 import java.time.LocalDate
 import kotlin.random.Random
 
@@ -10,6 +12,7 @@ interface CustomerRepository{
     fun getCustomerById(id: Long): Customer?
 }
 
+@Single
 class CustomerRepositoryImpl: CustomerRepository {
 
     override fun createCustomer(customer: Customer) = transaction {

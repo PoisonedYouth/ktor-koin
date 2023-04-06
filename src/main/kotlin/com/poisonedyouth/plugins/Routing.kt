@@ -9,12 +9,9 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import org.koin.ktor.ext.inject
-import org.slf4j.LoggerFactory
 
 fun Application.configureRouting() {
-    val customerApi by inject<CustomerApi>()
-
-    val logger = LoggerFactory.getLogger(this::class.java)
+    val customerApi: CustomerApi by inject()
 
     routing {
         post("/api/v1/customer") {

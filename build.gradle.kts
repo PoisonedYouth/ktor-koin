@@ -3,10 +3,12 @@ val kotlinVersion: String by project
 val logbackVersion: String by project
 val junitVersion: String by project
 val koinVersion: String by project
+val koinKspVersion: String by project
 
 plugins {
     kotlin("jvm") version "1.8.20"
     id("io.ktor.plugin") version "2.2.4"
+    id("com.google.devtools.ksp") version "1.8.20-1.0.10"
 }
 
 group = "com.poisonedyouth"
@@ -16,6 +18,10 @@ application {
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+}
+
+sourceSets.main {
+    java.srcDirs("build/generated/ksp/main/kotlin")
 }
 
 repositories {
@@ -34,7 +40,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-java-time:0.38.2")
     implementation("io.insert-koin:koin-ktor:$koinVersion")
     implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
-
+    implementation("io.insert-koin:koin-annotations:$koinKspVersion")
+    ksp("io.insert-koin:koin-ksp-compiler:$koinKspVersion")
     runtimeOnly("mysql:mysql-connector-java:8.0.29")
     runtimeOnly("org.jetbrains.exposed:exposed-jdbc:0.38.2")
 

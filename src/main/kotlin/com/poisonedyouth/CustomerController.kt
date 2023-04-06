@@ -1,11 +1,13 @@
 package com.poisonedyouth
 
 import io.ktor.http.HttpStatusCode
+import org.koin.core.annotation.Single
 
 interface CustomerApi {
     fun addNewCustomer(customerDto: CustomerDto): Pair<HttpStatusCode, CustomerController.ResponseDto>
 }
 
+@Single(createdAtStart = true)
 class CustomerController(
     private val customerApplicationService: CustomerApplicationService
 ) : CustomerApi {
