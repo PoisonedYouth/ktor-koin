@@ -1,6 +1,7 @@
 package com.poisonedyouth
 
 import org.junit.jupiter.api.Test
+import org.koin.ksp.generated.defaultModule
 import org.koin.test.verify.verify
 
 class DependencyConfigurationTest {
@@ -9,6 +10,6 @@ class DependencyConfigurationTest {
     fun verifyDependencyInjectionConfiguration() {
 
         // Verify the dependency configuration
-        com.poisonedyouth.plugins.main.verify()
+        defaultModule.verify()
     }
 }
